@@ -1,50 +1,77 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MinhasCompras.Views.ListaProduto"
-             Title="Compras">
+<ContentPage
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="MinhasCompras.Views.ListaProduto"
+  Title="Compras">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            Text="Somar"
-            Clicked="OnSum"/>
-        <ToolbarItem
-            Text="Adicionar"
-            Clicked="ToolbarItem_Clicked" />
-    </ContentPage.ToolbarItems>
-    
-    <VerticalStackLayout Padding="10" Spacing="10">
-        <SearchBar
-            x:Name="search"
-            Placeholder="Buscar produto"
-            TextChanged="OnSearchBarTextChanged"/>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
+      Text="Somar"
+      Clicked="OnSum"/>
+    <ToolbarItem
+      Text="Adicionar"
+      Clicked="ToolbarItem_Clicked"/>
+  </ContentPage.ToolbarItems>
 
-        <ListView
-            x:Name="lista_produtos">
-            <ListView.Header>
-                <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="5">
-                    <Label Grid.Column="0" Text="Descrição" />
-                    <Label Grid.Column="1" Text="Preço" />
-                    <Label Grid.Column="2" Text="Quantidade" />
-                    <Label Grid.Column="3" Text="Total" />
-                </Grid>
-            </ListView.Header>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Remover" Clicked="OnRemoveItem" />
-                        </ViewCell.ContextActions>
+  <VerticalStackLayout Padding="10"
+                       Spacing="10">
+    <SearchBar
+      x:Name="search"
+      Placeholder="Buscar produto"
+      TextChanged="OnSearchBarTextChanged"/>
 
-                        <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="5">
-                            <Label Grid.Column="0" Text="{Binding Descricao}" />
-                            <Label Grid.Column="1" Text="{Binding Preco}" />
-                            <Label Grid.Column="2" Text="{Binding Quantidade}" />
-                            <Label Grid.Column="3" Text="{Binding Total}" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+    <ListView
+      x:Name="lista_produtos"
+      ItemSelected="OnItemSelected">
+      <ListView.Header>
+        <Grid
+          ColumnDefinitions="*, *, *, *"
+          ColumnSpacing="5">
+          <Label
+            Grid.Column="0"
+            Text="Descrição"/>
+          <Label
+            Grid.Column="1"
+            Text="Preço"/>
+          <Label
+            Grid.Column="2"
+            Text="Quantidade"/>
+          <Label
+            Grid.Column="3"
+            Text="Total"/>
+        </Grid>
+      </ListView.Header>
+
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.ContextActions>
+              <MenuItem
+                Text="Remover"
+                Clicked="OnMenuItemClicked"
+                IsDestructive="True"/>
+            </ViewCell.ContextActions>
+
+            <Grid
+              ColumnDefinitions="*, *, *, *"
+              ColumnSpacing="5">
+              <Label
+                Grid.Column="0"
+                Text="{Binding Descricao}"/>
+              <Label
+                Grid.Column="1"
+                Text="{Binding Preco}"/>
+              <Label
+                Grid.Column="2"
+                Text="{Binding Quantidade}"/>
+              <Label
+                Grid.Column="3"
+                Text="{Binding Total}"/>
+            </Grid>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </VerticalStackLayout>
 </ContentPage>

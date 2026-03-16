@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MinhasCompras.Views.EditarProduto"
-             Title="EditarProduto">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="MinhasCompras.Views.EditarProduto"
+  Title="{Binding Descricao}">
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem
+      Text="Salvar"
+      Clicked="OnToolbarItemClicked"/>
+  </ContentPage.ToolbarItems>
+
+  <VerticalStackLayout
+    Padding="10"
+    Spacing="10">
+    <Label
+      Text="Descrição do produto:"/>
+    <Entry
+      x:Name="descricao"
+      Text="{Binding Descricao}"/>
+
+    <Label
+      Text="Quantidade:"/>
+    <Entry
+      x:Name="quantidade"
+      Keyboard="Numeric"
+      Text="{Binding Quantidade}"/>
+
+    <Label
+      Text="Preço unitário:"/>
+    <Entry
+      x:Name="preco"
+      Keyboard="Numeric"
+      Text="{Binding Preco}"/>
+  </VerticalStackLayout>
 </ContentPage>
