@@ -18,6 +18,11 @@
       Text="Descrição do produto:"/>
     <Entry
       x:Name="descricao"/>
+    
+    <Label
+      Text="Categoria do produto:"/>
+    <Entry
+      x:Name="categoria"/>
 
     <Label
       Text="Quantidade:"/>

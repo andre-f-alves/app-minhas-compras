@@ -5,6 +5,17 @@
   x:Class="MinhasCompras.Views.ListaProduto"
   Title="Compras">
 
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="Label">
+        <Setter Property="VerticalTextAlignment"
+            Value="Center"/>
+        <Setter Property="Padding"
+            Value="5"/>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
   <ContentPage.ToolbarItems>
     <ToolbarItem
       Text="Somar"
@@ -12,66 +23,85 @@
     <ToolbarItem
       Text="Adicionar"
       Clicked="ToolbarItem_Clicked"/>
+    <ToolbarItem
+      Text="Ver categorias"
+      Clicked="ToolbarItem_Clicked1"/>
   </ContentPage.ToolbarItems>
 
-  <VerticalStackLayout Padding="10"
-                       Spacing="10">
+  <StackLayout Padding="10"
+               Spacing="10">
     <SearchBar
       x:Name="search"
       Placeholder="Buscar produto"
       TextChanged="OnSearchBarTextChanged"/>
 
-    <ListView
-      x:Name="lista_produtos"
-      ItemSelected="OnItemSelected">
-      <ListView.Header>
-        <Grid
-          ColumnDefinitions="*, *, *, *"
-          ColumnSpacing="5">
-          <Label
-            Grid.Column="0"
-            Text="Descrição"/>
-          <Label
-            Grid.Column="1"
-            Text="Preço"/>
-          <Label
-            Grid.Column="2"
-            Text="Quantidade"/>
-          <Label
-            Grid.Column="3"
-            Text="Total"/>
-        </Grid>
-      </ListView.Header>
+    <Picker
+      x:Name="PickerCategoria"
+      Title="Selecione a categoria"
+      SelectedIndexChanged="OnCategoriaSelected"/>
 
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <ViewCell.ContextActions>
-              <MenuItem
-                Text="Remover"
-                Clicked="OnMenuItemClicked"
-                IsDestructive="True"/>
-            </ViewCell.ContextActions>
-
-            <Grid
-              ColumnDefinitions="*, *, *, *"
-              ColumnSpacing="5">
-              <Label
-                Grid.Column="0"
-                Text="{Binding Descricao}"/>
-              <Label
-                Grid.Column="1"
-                Text="{Binding Preco}"/>
-              <Label
-                Grid.Column="2"
-                Text="{Binding Quantidade}"/>
-              <Label
-                Grid.Column="3"
-                Text="{Binding Total}"/>
-            </Grid>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
-  </VerticalStackLayout>
+    <Border>
+      <ListView
+        x:Name="lista_produtos"
+        ItemSelected="OnItemSelected"
+        IsPullToRefreshEnabled="True"
+        Refreshing="OnRefreshingList">
+        <ListView.Header>
+          <Grid
+            ColumnDefinitions="*, *, *, *, *"
+            ColumnSpacing="5"
+            BackgroundColor="{StaticResource Gray300}">
+            <Label
+              Grid.Column="0"
+              Text="Descrição"/>
+            <Label
+              Grid.Column="1"
+              Text="Categoria"/>
+            <Label
+              Grid.Column="2"
+              Text="Preço"/>
+            <Label
+              Grid.Column="3"
+              Text="Quantidade"
+              HorizontalTextAlignment="Center"/>
+            <Label
+              Grid.Column="4"
+              Text="Total"/>
+          </Grid>
+        </ListView.Header>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.ContextActions>
+                <MenuItem
+                  Text="Remover"
+                  Clicked="OnMenuItemClicked"
+                  IsDestructive="True"/>
+              </ViewCell.ContextActions>
+              <Grid
+                ColumnDefinitions="*, *, *, *, *"
+                ColumnSpacing="5">
+                <Label
+                  Grid.Column="0"
+                  Text="{Binding Descricao}"/>
+                <Label
+                  Grid.Column="1"
+                  Text="{Binding Categoria}"/>
+                <Label
+                  Grid.Column="2"
+                  Text="{Binding Preco, StringFormat='{}{0:c}'}"/>
+                <Label
+                  Grid.Column="3"
+                  Text="{Binding Quantidade}"
+                  HorizontalTextAlignment="Center"/>
+                <Label
+                  Grid.Column="4"
+                  Text="{Binding Total, StringFormat='{}{0:c}'}"/>
+              </Grid>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </Border>
+  </StackLayout>
 </ContentPage>

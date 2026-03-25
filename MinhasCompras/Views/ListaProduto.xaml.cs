@@ -6,6 +6,8 @@ namespace MinhasCompras.Views;
 public partial class ListaProduto : ContentPage
 {
   ObservableCollection<Produto> produtos = [];
+  List<string> categorias = ["Todas"];
+
 
   public ListaProduto()
   {
@@ -21,6 +23,12 @@ public partial class ListaProduto : ContentPage
       produtos.Clear();
       List<Produto> tmp = await App.Database.GetAll();
       tmp.ForEach(produto => produtos.Add(produto));
+
+      produtos.ToList()
+        .GroupBy(p => p.Categoria.ToString())
+        .ToList().ForEach(g => categorias.Add(g.Key));
+      PickerCategoria.ItemsSource = categorias;
+      PickerCategoria.SelectedIndex = 0;
     }
     catch (Exception ex)
     {
@@ -44,15 +52,54 @@ public partial class ListaProduto : ContentPage
   {
     try
     {
+      PickerCategoria.SelectedIndex = 0;
       string filter = e.NewTextValue;
+
+      lista_produtos.IsRefreshing = true;
 
       produtos.Clear();
       List<Produto> tmp = await App.Database.Search(filter);
       tmp.ForEach(produto => produtos.Add(produto));
+
     }
     catch (Exception ex)
     {
       await DisplayAlert("Ops", ex.Message, "OK");
+    }
+    finally
+    {
+      lista_produtos.IsRefreshing = false;
+    }
+  }
+
+  private async void OnCategoriaSelected(object sender, EventArgs e)
+  {
+    try
+    {
+      produtos.Clear();
+      List<Produto> tmp;
+
+      if (PickerCategoria.SelectedIndex == 0)
+      {
+        tmp = await App.Database.GetAll();
+      }
+      else
+      {
+        string categoria = PickerCategoria.SelectedItem.ToString();
+        tmp = await App.Database.SearchByCategory(categoria);
+      }
+
+      tmp.ForEach(produto => produtos.Add(produto));
+      lista_produtos.IsRefreshing = true;
+      lista_produtos.ItemsSource = produtos;
+    }
+    catch (Exception ex)
+    {
+      await DisplayAlert("Ops!", ex.Message, "OK");
+    }
+    finally
+    {
+      lista_produtos.IsRefreshing = false;
     }
   }
 
@@ -97,6 +144,39 @@ public partial class ListaProduto : ContentPage
     catch (Exception ex)
     {
       DisplayAlert("Ops", ex.Message, "OK");
+    }
+  }
+
+  private async void OnRefreshingList(object sender, EventArgs e)
+  {
+    try
+    {
+      produtos.Clear();
+      List<Produto> tmp = await App.Database.GetAll();
+      tmp.ForEach(produto => produtos.Add(produto));
+    }
+    catch (Exception ex)
+    {
+      await DisplayAlert("Ops", ex.Message, "OK");
+    }
+    finally
+    {
+      lista_produtos.IsRefreshing = false;
+    }
+  }
+
+  private async void ToolbarItem_Clicked1(object sender, EventArgs e)
+  {
+    try
+    {
+      await Navigation.PushAsync(new Views.Categorias
+      {
+        BindingContext = lista_produtos
+      });
+    }
+    catch (Exception ex)
+    {
+      await DisplayAlert("Ops!", ex.Message, "OK");
     }
   }
 }

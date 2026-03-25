@@ -20,8 +20,8 @@ namespace MinhasCompras.Helpers
 
     public Task<List<Produto>> Update(Produto produto)
     {
-      string statement = "UPDATE Produto SET Descricao = ?, Quantidade = ?, Preco = ? WHERE Id = ?";
-      return _conn.QueryAsync<Produto>(statement, produto.Descricao, produto.Quantidade, produto.Preco, produto.Id);
+      string statement = "UPDATE Produto SET Descricao = ?, Categoria = ?, Quantidade = ?, Preco = ? WHERE Id = ?";
+      return _conn.QueryAsync<Produto>(statement, produto.Descricao, produto.Categoria, produto.Quantidade, produto.Preco, produto.Id);
     }
 
     public Task<int> Delete(int id)
@@ -38,6 +38,12 @@ namespace MinhasCompras.Helpers
     {
       string statement = "SELECT * FROM Produto WHERE Descricao LIKE ?";
       return _conn.QueryAsync<Produto>(statement, $"%{query}%");
+    }
+    
+    public Task<List<Produto>> SearchByCategory(string query)
+    {
+      string statement = "SELECT * FROM Produto WHERE Categoria = ?";
+      return _conn.QueryAsync<Produto>(statement, query);
     }
   }
 }

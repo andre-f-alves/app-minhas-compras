@@ -16,6 +16,7 @@ public partial class NovoProduto : ContentPage
       Produto produto = new()
       {
         Descricao = descricao.Text,
+        Categoria = categoria.Text,
         Quantidade = Convert.ToDecimal(quantidade.Text),
         Preco = Convert.ToDecimal(preco.Text)
       };

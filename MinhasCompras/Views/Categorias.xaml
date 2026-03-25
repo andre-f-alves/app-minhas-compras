@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MinhasCompras.Views.Categorias"
+             Title="Categorias">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="Label">
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5"/>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <StackLayout Padding="10"
+               Spacing="10">
+    <SearchBar
+      x:Name="search"
+      Placeholder="Buscar categoria"
+      TextChanged="OnSearchBarTextChanged"/>
+
+    <Border>
+      <ListView
+        x:Name="lista_categorias">
+        <ListView.Header>
+          <Grid
+            ColumnDefinitions="*, *"
+            ColumnSpacing="5"
+            BackgroundColor="{StaticResource Gray300}">
+            <Label
+              Grid.Column="0"
+              Text="Categoria"/>
+            <Label
+              Grid.Column="1"
+              Text="Total"/>
+          </Grid>
+        </ListView.Header>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <Grid
+                ColumnDefinitions="*, *"
+                ColumnSpacing="5">
+                <Label
+                  Grid.Column="0"
+                  Text="{Binding Categoria}"/>
+                <Label
+                  Grid.Column="1"
+                  Text="{Binding Total, StringFormat='{}{0:c}'}"/>
+              </Grid>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </Border>
+  </StackLayout>
+</ContentPage>

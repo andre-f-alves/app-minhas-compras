@@ -5,6 +5,7 @@ namespace MinhasCompras.Models
   public class Produto
   {
     string _descricao;
+    // string _categoria;
     decimal _quantidade;
     decimal _preco;
 
@@ -22,6 +23,7 @@ namespace MinhasCompras.Models
         _descricao = value;
       }
     }
+    public string Categoria { get; set; }
     public decimal Quantidade
     {
       get => _quantidade;
